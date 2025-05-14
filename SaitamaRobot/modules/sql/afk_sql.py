@@ -1,10 +1,16 @@
 import threading
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
 
 from datetime import datetime
 
 from SaitamaRobot.modules.sql import BASE, SESSION
 from sqlalchemy import Boolean, Column, Integer, UnicodeText, DateTime
 
+DATABASE_URL = "sqlite:///saitamarobot.db"
+
+engine = create_engine(DATABASE_URL, echo=False)
+BASE = declarative_base()
 
 class AFK(BASE):
     __tablename__ = "afk_users"
@@ -24,7 +30,7 @@ class AFK(BASE):
         return "afk_status for {}".format(self.user_id)
 
 
-AFK.__table__.create(checkfirst=True)
+AFK.__table__.create(bind=engine, checkfirst=True)
 INSERTION_LOCK = threading.RLock()
 
 AFK_USERS = {}
