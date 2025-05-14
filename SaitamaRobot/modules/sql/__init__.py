@@ -3,6 +3,7 @@ from SaitamaRobot import DB_URI
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy import Column, Integer, String
 
 DATABASE_URL = Config.SQLALCHEMY_DATABASE_URI  # This line defines DATABASE_URL
 
