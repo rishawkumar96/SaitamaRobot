@@ -1,8 +1,14 @@
 import threading
-
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import func, distinct, Column, String, UnicodeText, Integer
 
 from SaitamaRobot.modules.sql import SESSION, BASE
+
+DATABASE_URL = "sqlite:///saitamarobot.db"
+
+engine = create_engine(DATABASE_URL, echo=False)
+BASE = declarative_base()
 
 class BlacklistUsers(BASE):
     __tablename__ = 'blacklist_users'
@@ -48,8 +54,8 @@ class BlacklistSettings(BASE):
         )
 
 
-BlackListFilters.__table__.create(checkfirst=True)
-BlacklistSettings.__table__.create(checkfirst=True)
+BlackListFilters.__table__.create(bind=engine, checkfirst=True)
+BlacklistSettings.__table__.create(bind=engine, checkfirst=True)
 
 BLACKLIST_FILTER_INSERTION_LOCK = threading.RLock()
 BLACKLIST_SETTINGS_INSERTION_LOCK = threading.RLock()
