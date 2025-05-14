@@ -1,8 +1,13 @@
 import threading
-
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
 from SaitamaRobot.modules.sql import BASE, SESSION
 from sqlalchemy import Column, Integer, String, UnicodeText, distinct, func
 
+DATABASE_URL = "sqlite:///saitamarobot.db"
+
+engine = create_engine(DATABASE_URL, echo=False)
+BASE = declarative_base()
 
 class StickersFilters(BASE):
     __tablename__ = "blacklist_stickers"
@@ -41,8 +46,8 @@ class StickerSettings(BASE):
         )
 
 
-StickersFilters.__table__.create(checkfirst=True)
-StickerSettings.__table__.create(checkfirst=True)
+StickersFilters.__table__.create(bind=engine, checkfirst=True)
+StickerSettings.__table__.create(bind=engine, checkfirst=True)
 
 STICKERS_FILTER_INSERTION_LOCK = threading.RLock()
 STICKSET_FILTER_INSERTION_LOCK = threading.RLock()
