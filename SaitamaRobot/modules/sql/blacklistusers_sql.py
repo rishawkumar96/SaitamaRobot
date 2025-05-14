@@ -5,6 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from SaitamaRobot.modules.sql import BASE, SESSION
 from sqlalchemy import Column, String, UnicodeText
 
+DATABASE_URL = "sqlite:///saitamarobot.db"
 
 
 engine = create_engine(DATABASE_URL, echo=False)
