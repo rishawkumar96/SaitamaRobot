@@ -6,6 +6,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from SaitamaRobot.modules.sql import BASE, SESSION
 from sqlalchemy import Boolean, Column, Integer, String, UnicodeText, distinct, func
 from sqlalchemy.dialects import postgresql
+from sqlalchemy import Text
+import json
 
 DATABASE_URL = "sqlite:///saitamarobot.db"
 
