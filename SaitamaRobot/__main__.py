@@ -3,6 +3,10 @@ import time
 import re
 from sys import argv
 from typing import Optional
+from SaitamaRobot.config import Development as Config
+
+DATABASE_URL = Config.SQLALCHEMY_DATABASE_URI
+
 
 from SaitamaRobot import (
     ALLOW_EXCL,
