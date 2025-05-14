@@ -1,3 +1,4 @@
+from SaitamaRobot.config import Development as Config
 from SaitamaRobot import DB_URI
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
