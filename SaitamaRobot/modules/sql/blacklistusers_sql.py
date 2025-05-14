@@ -3,11 +3,14 @@ import threading
 from SaitamaRobot.modules.sql import BASE, SESSION
 from sqlalchemy import Column, String, UnicodeText
 
+engine = create_engine(DATABASE_URL, echo=False)
 
 class BlacklistUsers(BASE):
     __tablename__ = "blacklistusers"
     user_id = Column(String(14), primary_key=True)
     reason = Column(UnicodeText)
+
+BASE.metadata.create_all(bind=engine)
 
     def __init__(self, user_id, reason=None):
         self.user_id = user_id
