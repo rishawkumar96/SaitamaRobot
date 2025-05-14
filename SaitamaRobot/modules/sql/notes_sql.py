@@ -4,6 +4,7 @@ import threading
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 
+from sqlalchemy import BigInteger
 from SaitamaRobot.modules.helper_funcs.msg_types import Types
 from SaitamaRobot.modules.sql import BASE, SESSION
 from sqlalchemy import Boolean, Column, Integer, String, UnicodeText, distinct, func
