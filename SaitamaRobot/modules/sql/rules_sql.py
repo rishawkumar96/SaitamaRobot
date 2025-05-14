@@ -1,8 +1,15 @@
 import threading
 
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+
 from SaitamaRobot.modules.sql import BASE, SESSION
 from sqlalchemy import Column, String, UnicodeText, distinct, func
 
+DATABASE_URL = "sqlite:///saitamarobot.db"
+
+engine = create_engine(DATABASE_URL, echo=False)
+BASE = declarative_base()
 
 class Rules(BASE):
     __tablename__ = "rules"
@@ -16,7 +23,7 @@ class Rules(BASE):
         return "<Chat {} rules: {}>".format(self.chat_id, self.rules)
 
 
-Rules.__table__.create(checkfirst=True)
+Rules.__table__.create(bind=engine, checkfirst=True)
 
 INSERTION_LOCK = threading.RLock()
 
