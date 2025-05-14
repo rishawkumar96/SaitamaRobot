@@ -1,6 +1,22 @@
 import re
 import time
 from typing import Dict, List
+import traceback
+
+_original_compile = re.compile
+
+def debug_compile(pattern, flags=0):
+    try:
+        return _original_compile(pattern, flags)
+    except re.error as e:
+        print("Invalid regex pattern detected:")
+        print(f"Pattern: {pattern}")
+        print(f"Error: {e}")
+        traceback.print_stack()
+        raise
+
+re.compile = debug_compile
+
 
 import bleach
 import markdown2
