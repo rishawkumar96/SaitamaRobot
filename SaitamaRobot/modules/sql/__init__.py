@@ -5,7 +5,7 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 
 
 def start() -> scoped_session:
-    engine = create_engine(SQLALCHEMY_DATABASE_URI)
+    engine = create_engine(DATABASE_URI, echo=False)
     BASE.metadata.bind = engine
     BASE.metadata.create_all(engine)
     return scoped_session(sessionmaker(bind=engine, autoflush=False))
