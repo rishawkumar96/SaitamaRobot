@@ -1,9 +1,16 @@
 import threading
 from typing import Union
 
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+
 from SaitamaRobot.modules.sql import BASE, SESSION
 from sqlalchemy import Boolean, Column, Integer, String
 
+DATABASE_URL = "sqlite:///saitamarobot.db"
+
+engine = create_engine(DATABASE_URL, echo=False)
+BASE = declarative_base()
 
 class ReportingUserSettings(BASE):
     __tablename__ = "user_report_settings"
@@ -29,8 +36,8 @@ class ReportingChatSettings(BASE):
         return "<Chat report settings ({})>".format(self.chat_id)
 
 
-ReportingUserSettings.__table__.create(checkfirst=True)
-ReportingChatSettings.__table__.create(checkfirst=True)
+ReportingUserSettings.__table__.create(bind=engine, checkfirst=True)
+ReportingChatSettings.__table__.create(bind=engine, checkfirst=True)
 
 CHAT_LOCK = threading.RLock()
 USER_LOCK = threading.RLock()
