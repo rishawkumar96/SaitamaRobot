@@ -1,10 +1,16 @@
 import threading
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
 
 from sqlalchemy import Column, String, UnicodeText, Boolean, Integer, distinct, func
 
 from SaitamaRobot.modules.helper_funcs.msg_types import Types
 from SaitamaRobot.modules.sql import BASE, SESSION
 
+DATABASE_URL = "sqlite:///saitamarobot.db"
+
+engine = create_engine(DATABASE_URL, echo=False)
+BASE = declarative_base()
 
 class CustomFilters(BASE):
     __tablename__ = "cust_filters"
@@ -116,8 +122,8 @@ class Buttons(BASE):
         self.same_line = same_line
 
 
-CustomFilters.__table__.create(checkfirst=True)
-Buttons.__table__.create(checkfirst=True)
+CustomFilters.__table__.create(bind=engine, checkfirst=True)
+Buttons.__table__.create(bind=engine, checkfirst=True)
 
 CUST_FILT_LOCK = threading.RLock()
 BUTTON_LOCK = threading.RLock()
