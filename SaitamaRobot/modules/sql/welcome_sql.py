@@ -2,9 +2,17 @@ import random
 import threading
 from typing import Union
 
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+
 from SaitamaRobot.modules.helper_funcs.msg_types import Types
 from SaitamaRobot.modules.sql import BASE, SESSION
 from sqlalchemy import BigInteger, Boolean, Column, Integer, String, UnicodeText
+
+DATABASE_URL = "sqlite:///saitamarobot.db"
+
+engine = create_engine(DATABASE_URL, echo=False)
+BASE = declarative_base()
 
 DEFAULT_WELCOME = "Hey {first}, how are you?"
 DEFAULT_GOODBYE = "Nice knowing ya!"
@@ -317,12 +325,12 @@ class CleanServiceSetting(BASE):
         return "<Chat used clean service ({})>".format(self.chat_id)
 
 
-Welcome.__table__.create(checkfirst=True)
-WelcomeButtons.__table__.create(checkfirst=True)
+Welcome.__table__.create(bind=engine, checkfirst=True)
+WelcomeButtons.__table__.create(bind=engine, checkfirst=True)
 GoodbyeButtons.__table__.create(checkfirst=True)
-WelcomeMute.__table__.create(checkfirst=True)
-WelcomeMuteUsers.__table__.create(checkfirst=True)
-CleanServiceSetting.__table__.create(checkfirst=True)
+WelcomeMute.__table__.create(bind=engine, checkfirst=True)
+WelcomeMuteUsers.__table__.create(bind=engine, checkfirst=True)
+CleanServiceSetting.__table__.create(bind=engine, checkfirst=True)
 
 INSERTION_LOCK = threading.RLock()
 WELC_BTN_LOCK = threading.RLock()
