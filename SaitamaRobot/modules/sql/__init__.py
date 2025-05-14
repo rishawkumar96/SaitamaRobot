@@ -7,6 +7,8 @@ from sqlalchemy import Column, Integer, String
 
 DATABASE_URL = Config.SQLALCHEMY_DATABASE_URI  # This line defines DATABASE_URL
 
+engine = create_engine(DATABASE_URL, echo=False)
+
 BASE = declarative_base()
 
 def start() -> scoped_session:
@@ -19,8 +21,8 @@ class BlacklistUsers(BASE):
     __tablename__ = 'blacklist_users'
     # define your columns here
     user_id = Column(Integer, primary_key=True)
-# Create the table safely
-BlacklistUsers.__table__.create(bind=engine, checkfirst=True)
+    
+BASE.metadata.create_all(bind=engine)
 
 BASE = declarative_base()
 SESSION = start()
