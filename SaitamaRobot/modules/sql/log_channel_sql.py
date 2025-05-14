@@ -1,8 +1,14 @@
 import threading
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
 
 from SaitamaRobot.modules.sql import BASE, SESSION
 from sqlalchemy import Column, String, distinct, func
 
+DATABASE_URL = "sqlite:///saitamarobot.db"
+
+engine = create_engine(DATABASE_URL, echo=False)
+BASE = declarative_base()
 
 class GroupLogs(BASE):
     __tablename__ = "log_channels"
@@ -14,7 +20,7 @@ class GroupLogs(BASE):
         self.log_channel = str(log_channel)
 
 
-GroupLogs.__table__.create(checkfirst=True)
+GroupLogs.__table__.create(bind=engine, checkfirst=True)
 
 LOGS_INSERTION_LOCK = threading.RLock()
 
