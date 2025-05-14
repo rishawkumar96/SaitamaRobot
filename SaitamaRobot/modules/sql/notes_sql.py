@@ -1,10 +1,17 @@
 # Note: chat_id's are stored as strings because the int is too large to be stored in a PSQL database.
+
 import threading
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
 
 from SaitamaRobot.modules.helper_funcs.msg_types import Types
 from SaitamaRobot.modules.sql import BASE, SESSION
 from sqlalchemy import Boolean, Column, Integer, String, UnicodeText, distinct, func
 
+DATABASE_URL = "sqlite:///saitamarobot.db"
+
+engine = create_engine(DATABASE_URL, echo=False)
+BASE = declarative_base()
 
 class Notes(BASE):
     __tablename__ = "notes"
@@ -44,8 +51,8 @@ class Buttons(BASE):
         self.same_line = same_line
 
 
-Notes.__table__.create(checkfirst=True)
-Buttons.__table__.create(checkfirst=True)
+Notes.__table__.create(bind=engine, checkfirst=True)
+Buttons.__table__.create(bind=engine, checkfirst=True)
 
 NOTES_INSERTION_LOCK = threading.RLock()
 BUTTONS_INSERTION_LOCK = threading.RLock()
