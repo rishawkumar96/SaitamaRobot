@@ -1,11 +1,18 @@
 import threading
 import time
 from typing import Union
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+
 
 from sqlalchemy import Column, String, Boolean, UnicodeText, Integer
 
 from SaitamaRobot.modules.sql import SESSION, BASE
 
+DATABASE_URL = "sqlite:///saitamarobot.db"
+
+engine = create_engine(DATABASE_URL, echo=False)
+BASE = declarative_base()
 
 class ChatAccessConnectionSettings(BASE):
     __tablename__ = "access_connection"
@@ -48,7 +55,7 @@ class ConnectionHistory(BASE):
     def __repr__(self):
         return "<connection user {} history {}>".format(self.user_id, self.chat_id)
 
-
+BASE.metadata.create_all(bind=engine)
 ChatAccessConnectionSettings.__table__.create(checkfirst=True)
 Connection.__table__.create(checkfirst=True)
 ConnectionHistory.__table__.create(checkfirst=True)
