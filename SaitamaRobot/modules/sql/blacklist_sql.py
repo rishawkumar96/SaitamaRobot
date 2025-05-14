@@ -4,6 +4,12 @@ from sqlalchemy import func, distinct, Column, String, UnicodeText, Integer
 
 from SaitamaRobot.modules.sql import SESSION, BASE
 
+class BlacklistUsers(BASE):
+    __tablename__ = 'blacklist_users'
+    # define your columns here
+
+# Create the table safely
+BlacklistUsers.__table__.create(bind=engine, checkfirst=True)
 
 class BlackListFilters(BASE):
     __tablename__ = "blacklist"
