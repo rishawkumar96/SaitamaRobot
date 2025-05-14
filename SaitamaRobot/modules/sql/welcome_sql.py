@@ -278,8 +278,8 @@ class WelcomeButtons(BASE):
 
 class GoodbyeButtons(BASE):
     __tablename__ = "leave_urls"
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    chat_id = Column(String(14), primary_key=True)
+    id = Column(Integer, primary_key=True)
+    chat_id = Column(Integer), primary_key=True)
     name = Column(UnicodeText, nullable=False)
     url = Column(UnicodeText, nullable=False)
     same_line = Column(Boolean, default=False)
