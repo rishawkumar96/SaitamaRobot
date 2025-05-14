@@ -1,4 +1,6 @@
 import threading
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
 
 from SaitamaRobot import dispatcher
 from SaitamaRobot.modules.sql import BASE, SESSION
@@ -12,6 +14,10 @@ from sqlalchemy import (
     func,
 )
 
+DATABASE_URL = "sqlite:///saitamarobot.db"
+
+engine = create_engine(DATABASE_URL, echo=False)
+BASE = declarative_base()
 
 class Users(BASE):
     __tablename__ = "users"
@@ -68,9 +74,9 @@ class ChatMembers(BASE):
         )
 
 
-Users.__table__.create(checkfirst=True)
-Chats.__table__.create(checkfirst=True)
-ChatMembers.__table__.create(checkfirst=True)
+Users.__table__.create(bind=engine, checkfirst=True)
+Chats.__table__.create(bind=engine, checkfirst=True)
+ChatMembers.__table__.create(bind=engine, checkfirst=True)
 
 INSERTION_LOCK = threading.RLock()
 
