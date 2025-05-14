@@ -13,6 +13,7 @@ BASE = declarative_base()
 class BlacklistUsers(BASE):
     __tablename__ = 'blacklist_users'
     # define your columns here
+    user_id = Column(Integer, primary_key =True)
 
 # Create the table safely
 BlacklistUsers.__table__.create(bind=engine, checkfirst=True)
