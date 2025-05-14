@@ -1,8 +1,14 @@
 import threading
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
 
 from SaitamaRobot.modules.sql import BASE, SESSION
 from sqlalchemy import Column, String, UnicodeText
 
+
+
+engine = create_engine(DATABASE_URL, echo=False)
+BASE = declarative_base()
 
 class BlacklistUsers(BASE):
     __tablename__ = "blacklistusers"
