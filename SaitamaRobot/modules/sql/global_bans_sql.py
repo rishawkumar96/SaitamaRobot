@@ -1,8 +1,15 @@
 import threading
 
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+
 from SaitamaRobot.modules.sql import BASE, SESSION
 from sqlalchemy import Boolean, Column, Integer, String, UnicodeText
 
+DATABASE_URL = "sqlite:///saitamarobot.db"
+
+engine = create_engine(DATABASE_URL, echo=False)
+BASE = declarative_base()
 
 class GloballyBannedUsers(BASE):
     __tablename__ = "gbans"
@@ -35,8 +42,8 @@ class GbanSettings(BASE):
         return "<Gban setting {} ({})>".format(self.chat_id, self.setting)
 
 
-GloballyBannedUsers.__table__.create(checkfirst=True)
-GbanSettings.__table__.create(checkfirst=True)
+GloballyBannedUsers.__table__.create(bind=engine, checkfirst=True)
+GbanSettings.__table__.create(bind=engine, checkfirst=True)
 
 GBANNED_USERS_LOCK = threading.RLock()
 GBAN_SETTING_LOCK = threading.RLock()
