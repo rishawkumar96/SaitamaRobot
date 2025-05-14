@@ -12,7 +12,7 @@ class BlacklistUsers(BASE):
 
 BASE.metadata.create_all(bind=engine)
 
-    def __init__(self, user_id, reason=None):
+def __init__(self, user_id, reason=None):
         self.user_id = user_id
         self.reason = reason
 
