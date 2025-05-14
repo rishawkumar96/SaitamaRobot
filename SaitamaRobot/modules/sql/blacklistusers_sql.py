@@ -3,7 +3,6 @@ import threading
 from SaitamaRobot.modules.sql import BASE, SESSION
 from sqlalchemy import Column, String, UnicodeText
 
-engine = create_engine(DATABASE_URL, echo=False)
 
 class BlacklistUsers(BASE):
     __tablename__ = "blacklistusers"
