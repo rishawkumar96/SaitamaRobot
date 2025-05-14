@@ -32,15 +32,15 @@ from telegram.ext import (
 )
 from telegram.ext.dispatcher import run_async
 
-FILE_MATCHER = re.compile(r"^###file_id(!photo)?###:(.*?)(?:\s|$)")
-STICKER_MATCHER = re.compile(r"^###sticker(!photo)?###:")
-BUTTON_MATCHER = re.compile(r"^###button(!photo)?###:(.*?)(?:\s|$)")
-MYFILE_MATCHER = re.compile(r"^###file(!photo)?###:")
-MYPHOTO_MATCHER = re.compile(r"^###photo(!photo)?###:")
-MYAUDIO_MATCHER = re.compile(r"^###audio(!photo)?###:")
-MYVOICE_MATCHER = re.compile(r"^###voice(!photo)?###:")
-MYVIDEO_MATCHER = re.compile(r"^###video(!photo)?###:")
-MYVIDEONOTE_MATCHER = re.compile(r"^###video_note(!photo)?###:")
+FILE_MATCHER = re.compile(r"^###file_id(?!photo)?###:(.*?)(?:\s|$)")
+STICKER_MATCHER = re.compile(r"^###sticker(?!photo)?###:")
+BUTTON_MATCHER = re.compile(r"^###button(?!photo)?###:(.*?)(?:\s|$)")
+MYFILE_MATCHER = re.compile(r"^###file(?!photo)?###:")
+MYPHOTO_MATCHER = re.compile(r"^###photo(?!photo)?###:")
+MYAUDIO_MATCHER = re.compile(r"^###audio(?!photo)?###:")
+MYVOICE_MATCHER = re.compile(r"^###voice(?!photo)?###:")
+MYVIDEO_MATCHER = re.compile(r"^###video(?!photo)?###:")
+MYVIDEONOTE_MATCHER = re.compile(r"^###video_note(?!photo)?###:")
 
 ENUM_FUNC_MAP = {
     sql.Types.TEXT.value: dispatcher.bot.send_message,
