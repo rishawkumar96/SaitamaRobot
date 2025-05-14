@@ -1,8 +1,15 @@
 import threading
 
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+
 from SaitamaRobot.modules.sql import BASE, SESSION
 from sqlalchemy import Column, Integer, UnicodeText
 
+DATABASE_URL = "sqlite:///saitamarobot.db"
+
+engine = create_engine(DATABASE_URL, echo=False)
+BASE = declarative_base()
 
 class UserInfo(BASE):
     __tablename__ = "userinfo"
@@ -30,8 +37,8 @@ class UserBio(BASE):
         return "<User info %d>" % self.user_id
 
 
-UserInfo.__table__.create(checkfirst=True)
-UserBio.__table__.create(checkfirst=True)
+UserInfo.__table__.create(bind=engine, checkfirst=True)
+UserBio.__table__.create(bind=engine, checkfirst=True)
 
 INSERTION_LOCK = threading.RLock()
 
