@@ -16,14 +16,12 @@ class BlacklistUsers(BASE):
     user_id = Column(String(14), primary_key=True)
     reason = Column(UnicodeText)
 
-BASE.metadata.create_all(bind=engine)
 
 def __init__(self, user_id, reason=None):
         self.user_id = user_id
         self.reason = reason
 
-
-BlacklistUsers.__table__.create(checkfirst=True)
+BASE.metadata.create_all(bind=engine)
 
 BLACKLIST_LOCK = threading.RLock()
 BLACKLIST_USERS = set()
