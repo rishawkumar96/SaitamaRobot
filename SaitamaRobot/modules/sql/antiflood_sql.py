@@ -1,8 +1,16 @@
 import threading
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
 
 from sqlalchemy import String, Column, Integer, UnicodeText
 
 from SaitamaRobot.modules.sql import SESSION, BASE
+
+DATABASE_URL = "sqlite:///saitamarobot.db"
+
+engine = create_engine(DATABASE_URL, echo=False)
+BASE = declarative_base()
+
 
 DEF_COUNT = 1
 DEF_LIMIT = 0
@@ -38,8 +46,8 @@ class FloodSettings(BASE):
         return "<{} will executing {} for flood.>".format(self.chat_id, self.flood_type)
 
 
-FloodControl.__table__.create(checkfirst=True)
-FloodSettings.__table__.create(checkfirst=True)
+FloodControl.__table__.create(bind=engine, checkfirst=True)
+FloodSettings.__table__.create(bind=engine, checkfirst=True)
 
 INSERTION_FLOOD_LOCK = threading.RLock()
 INSERTION_FLOOD_SETTINGS_LOCK = threading.RLock()
