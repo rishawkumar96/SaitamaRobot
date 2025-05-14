@@ -12,6 +12,12 @@ def start() -> scoped_session:
     BASE.metadata.create_all(engine)
     return scoped_session(sessionmaker(bind=engine, autoflush=False))
 
+class BlacklistUsers(BASE):
+    __tablename__ = 'blacklist_users'
+    # define your columns here
+
+# Create the table safely
+BlacklistUsers.__table__.create(bind=engine, checkfirst=True)
 
 BASE = declarative_base()
 SESSION = start()
