@@ -1,8 +1,13 @@
 import threading
-
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
 from SaitamaRobot.modules.sql import BASE, SESSION
 from sqlalchemy import Boolean, Column, UnicodeText
 
+DATABASE_URL = "sqlite:///saitamarobot.db"
+
+engine = create_engine(DATABASE_URL, echo=False)
+BASE = declarative_base()
 
 class CleanerBlueTextChatSettings(BASE):
     __tablename__ = "cleaner_bluetext_chat_setting"
@@ -35,9 +40,9 @@ class CleanerBlueTextGlobal(BASE):
         self.command = command
 
 
-CleanerBlueTextChatSettings.__table__.create(checkfirst=True)
-CleanerBlueTextChat.__table__.create(checkfirst=True)
-CleanerBlueTextGlobal.__table__.create(checkfirst=True)
+CleanerBlueTextChatSettings.__table__.create(bind=engine, checkfirst=True)
+CleanerBlueTextChat.__table__.create(bind=engine, checkfirst=True)
+CleanerBlueTextGlobal.__table__.create(bind=engine, checkfirst=True)
 
 CLEANER_CHAT_SETTINGS = threading.RLock()
 CLEANER_CHAT_LOCK = threading.RLock()
