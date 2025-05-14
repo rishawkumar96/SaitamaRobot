@@ -1,10 +1,16 @@
 # New chat added -> setup permissions
 import threading
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
 
 from sqlalchemy import Column, String, Boolean
 
 from SaitamaRobot.modules.sql import SESSION, BASE
 
+DATABASE_URL = "sqlite:///saitamarobot.db"
+
+engine = create_engine(DATABASE_URL, echo=False)
+BASE = declarative_base()
 
 class Permissions(BASE):
     __tablename__ = "permissions"
@@ -75,9 +81,9 @@ class Restrictions(BASE):
 # For those who faced database error, Just uncomment the
 # line below and run bot for 1 time & remove that line!
 
-Permissions.__table__.create(checkfirst=True)
+Permissions.__table__.create(bind=engine, checkfirst=True)
 # Permissions.__table__.drop()
-Restrictions.__table__.create(checkfirst=True)
+Restrictions.__table__.create(bind=engine, checkfirst=True)
 
 PERM_LOCK = threading.RLock()
 RESTR_LOCK = threading.RLock()
