@@ -2,6 +2,22 @@ import re, ast
 from io import BytesIO
 import random
 from typing import Optional
+import traceback
+
+_original_compile = re.compile
+
+def debug_compile(pattern, flags=0):
+    try:
+        return _original_compile(pattern, flags)
+    except re.error as e:
+        print("Invalid regex pattern detected:")
+        print(f"Pattern: {pattern}")
+        print(f"Error: {e}")
+        traceback.print_stack()
+        raise
+
+re.compile = debug_compile
+
 
 import SaitamaRobot.modules.sql.notes_sql as sql
 from SaitamaRobot import LOGGER, JOIN_LOGGER, SUPPORT_CHAT, dispatcher, DRAGONS
