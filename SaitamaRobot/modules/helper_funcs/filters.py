@@ -54,4 +54,7 @@ class CustomFilters(object):
                 or message.video,
             )
 
+        def __call__(self, message: Message) -> bool:
+            return self.filter(message)
+
     has_text = _HasText()
