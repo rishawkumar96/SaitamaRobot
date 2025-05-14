@@ -1,9 +1,14 @@
 import threading
-
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, Integer
 
 from SaitamaRobot.modules.sql import BASE, SESSION
 
+DATABASE_URL = "sqlite:///saitamarobot.db"
+
+engine = create_engine(DATABASE_URL, echo=False)
+BASE = declarative_base()
 
 class Approvals(BASE):
     __tablename__ = "approval"
