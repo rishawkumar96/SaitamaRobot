@@ -1,11 +1,18 @@
 import ast
 import threading
 
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+
 from SaitamaRobot import dispatcher
 from SaitamaRobot.modules.sql import BASE, SESSION
 from sqlalchemy import Boolean, Column, Integer, String, UnicodeText
 from telegram.error import BadRequest, Unauthorized
 
+DATABASE_URL = "sqlite:///saitamarobot.db"
+
+engine = create_engine(DATABASE_URL, echo=False)
+BASE = declarative_base()
 
 class Federations(BASE):
     __tablename__ = "feds"
@@ -88,11 +95,11 @@ class FedSubs(BASE):
 # BansF.__table__.drop()
 # FedSubs.__table__.drop()
 
-Federations.__table__.create(checkfirst=True)
-ChatF.__table__.create(checkfirst=True)
-BansF.__table__.create(checkfirst=True)
-FedsUserSettings.__table__.create(checkfirst=True)
-FedSubs.__table__.create(checkfirst=True)
+Federations.__table__.create(bind=engine, checkfirst=True)
+ChatF.__table__.create(bind=engine, checkfirst=True)
+BansF.__table__.create(bind=engine, checkfirst=True)
+FedsUserSettings.__table__.create(bind=engine, checkfirst=True)
+FedSubs.__table__.create(bind=engine, checkfirst=True)
 
 FEDS_LOCK = threading.RLock()
 CHAT_FEDS_LOCK = threading.RLock()
