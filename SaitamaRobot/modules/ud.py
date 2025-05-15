@@ -18,9 +18,9 @@ def ud(update: Update, context: CallbackContext):
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN)
 
 
-UD_HANDLER = DisableAbleCommandHandler(["ud"], ud)
+UD_HANDLER = DisableAbleCommandHandler(["ud"], ud, run_async=True)
 
-dispatcher.add_handler(UD_HANDLER)
+dispatcher.add_handler(UD_HANDLER, run_async=True)
 
 __command_list__ = ["ud"]
 __handlers__ = [UD_HANDLER]
