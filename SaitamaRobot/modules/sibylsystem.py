@@ -15,7 +15,7 @@ from telegram.utils import helpers
 from telegram.parsemode import ParseMode
 from telegram.utils.helpers import mention_html
 
-from SibylSystem import GeneralException, PsychoPass
+from sibylsystem import GeneralException, PsychoPass
 
 from . import ALL_MODULES
 from .log_channel import loggable
