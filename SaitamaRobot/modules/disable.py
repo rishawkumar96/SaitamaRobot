@@ -71,7 +71,7 @@ if is_module_loaded(FILENAME):
                             user_id = user.id
                         if SpamChecker.check_user(user_id):
                             return None
-                        filter_result = self.filters(update.message)
+                        filter_result = self.filters(update)
                         if filter_result:
                             # disabled, admincmd, user admin
                             if sql.is_command_disabled(chat.id, command[0].lower()):
@@ -103,7 +103,7 @@ if is_module_loaded(FILENAME):
 
             chat = update.effective_chat
             message = update.effective_message
-            filter_result = self.filters(update.message)
+            filter_result = self.filters(update)
 
             try:
                 args = message.text.split()[1:]
