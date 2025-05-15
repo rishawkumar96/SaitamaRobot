@@ -98,7 +98,7 @@ class SibylSettings(BASE):
         return f"<Sibyl setting {self.chat_id} ({self.setting})>"
 
 
-SibylSettings.__table__.create(checkfirst=True)
+SibylSettings.__table__.create(bind=engine, checkfirst=True)
 
 
 SIBYL_SETTING_LOCK = threading.RLock()
