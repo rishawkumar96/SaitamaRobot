@@ -327,7 +327,7 @@ class CleanServiceSetting(BASE):
 
 Welcome.__table__.create(bind=engine, checkfirst=True)
 WelcomeButtons.__table__.create(bind=engine, checkfirst=True)
-GoodbyeButtons.__table__.create(checkfirst=True)
+GoodbyeButtons.__table__.create(bind=engine, checkfirst=True)
 WelcomeMute.__table__.create(bind=engine, checkfirst=True)
 WelcomeMuteUsers.__table__.create(bind=engine, checkfirst=True)
 CleanServiceSetting.__table__.create(bind=engine, checkfirst=True)
