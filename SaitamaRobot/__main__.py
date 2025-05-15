@@ -4,6 +4,7 @@ import re
 from sys import argv
 from typing import Optional
 from SaitamaRobot.config import Development as Config
+from sibylsystem import GeneralException, PsychoPass
 
 DATABASE_URL = Config.SQLALCHEMY_DATABASE_URI
 
