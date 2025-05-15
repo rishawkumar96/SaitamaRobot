@@ -71,7 +71,7 @@ if is_module_loaded(FILENAME):
                             user_id = user.id
                         if SpamChecker.check_user(user_id):
                             return None
-                        filter_result = self.filters(update)
+                        filter_result = self.filters(update.message)
                         if filter_result:
                             # disabled, admincmd, user admin
                             if sql.is_command_disabled(chat.id, command[0].lower()):
