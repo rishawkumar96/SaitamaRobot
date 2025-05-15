@@ -3,6 +3,8 @@ import logging
 import threading
 from enum import Enum
 from typing import Optional
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
 
 from telegram import Bot, Chat, Message, MessageEntity, Update, InlineKeyboardButton, InlineKeyboardMarkup, User
 from telegram.ext.commandhandler import CommandHandler
@@ -16,6 +18,11 @@ from telegram.parsemode import ParseMode
 from telegram.utils.helpers import mention_html
 
 from SibylSystem import GeneralException, PsychoPass
+
+DATABASE_URL = "sqlite:///saitamarobot.db"
+
+engine = create_engine(DATABASE_URL, echo=False)
+BASE = declarative_base()
 
 from . import ALL_MODULES
 from .log_channel import loggable
