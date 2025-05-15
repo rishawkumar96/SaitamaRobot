@@ -103,7 +103,7 @@ if is_module_loaded(FILENAME):
 
             chat = update.effective_chat
             message = update.effective_message
-            filter_result = self.filters(update)
+            filter_result = self.filters(update.message)
 
             try:
                 args = message.text.split()[1:]
