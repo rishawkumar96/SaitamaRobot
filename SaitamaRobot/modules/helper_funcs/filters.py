@@ -51,7 +51,7 @@ class CustomFilters(object):
                 or message.sticker
                 or message.photo
                 or message.document
-                or message.video,
+                or message.video
             )
 
         def __call__(self, message: Message) -> bool:
