@@ -20,7 +20,7 @@ REPORT_GROUP = 12
 REPORT_IMMUNE_USERS = DRAGONS + TIGERS + WOLVES
 
 
-@run_async
+
 @user_admin
 def report_setting(update: Update, context: CallbackContext):
     bot, args = context.bot, context.args
@@ -65,7 +65,7 @@ def report_setting(update: Update, context: CallbackContext):
             )
 
 
-@run_async
+
 @user_not_admin
 @loggable
 def report(update: Update, context: CallbackContext) -> str:
@@ -275,10 +275,10 @@ __help__ = """
 """
 
 SETTING_HANDLER = CommandHandler("reports", report_setting)
-REPORT_HANDLER = CommandHandler("report", report, filters=Filters.group)
-ADMIN_REPORT_HANDLER = MessageHandler(Filters.regex(r"(?i)@admin(s)?"), report)
+REPORT_HANDLER = CommandHandler("report", report, filters=Filters.group, run_async=True)
+ADMIN_REPORT_HANDLER = MessageHandler(Filters.regex(r"(?i)@admin(s)?"), report, run_async=True)
 
-REPORT_BUTTON_USER_HANDLER = CallbackQueryHandler(buttons, pattern=r"report_")
+REPORT_BUTTON_USER_HANDLER = CallbackQueryHandler(buttons, pattern=r"report_", run_async=True)
 dispatcher.add_handler(REPORT_BUTTON_USER_HANDLER)
 
 dispatcher.add_handler(SETTING_HANDLER)
